@@ -1,0 +1,6 @@
+node_modules/
+dist/
+data/
+.github/
+yarn-error.log
+yarn.lock
