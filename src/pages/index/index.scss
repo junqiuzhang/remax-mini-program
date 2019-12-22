@@ -1,0 +1,16 @@
+.app {
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  .button-wrap {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    .button {
+      width: calc(100% - 64px);
+      margin: 64px 24px;
+    }
+  }
+}
+
