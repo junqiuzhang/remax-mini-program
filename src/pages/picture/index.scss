@@ -1,0 +1,22 @@
+.picture-page {
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  background-color: #f9f7fe;
+  .picture-wrap {
+    .picture {
+      height: 60vh;
+    }
+  }
+  .button-wrap {
+    width: 100vw;
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    .button {
+      width: 80vw;
+      margin: 10vh 10vw;
+    }
+  }
+}
+
