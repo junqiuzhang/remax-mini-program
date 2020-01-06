@@ -1,7 +1,6 @@
 .talk-page {
   width: 100vw;
   height: 100vh;
-  text-align: center;
   background-color: #f9f7fe;
   box-sizing: border-box;
   .list-wrap {
@@ -9,18 +8,21 @@
     padding: 2vw;
     .list-item {
       width: 100%;
-      min-height: 60px;
+      min-height: 90px;
+      text-align: right;
       box-sizing: border-box;
       .text {
-        max-width: 40vw;
-        padding: 4px;
+        max-width: 40%;
+        min-height: 60px;
+        padding: 16px;
         border-radius: 60px;
-        float: right;
+        text-align: left;
+        box-sizing: border-box;
         background-color: #defab1;
       }
       &:nth-child(2n) {
+        text-align: left;
         .text {
-          float: left;
           background-color: #c0cffa;
         }
       }
@@ -56,6 +58,9 @@
       border-radius: 60px;
       box-sizing: border-box;
       background-color: #00ff00;
+      &.disabled {
+        opacity: 0.5;
+      }
     }
   }
 }

@@ -8,10 +8,15 @@ export default () => {
   const [list, setList] = React.useState([]);
   const [value, setValue] = React.useState('');
   const [disabled, setDisabled] = React.useState(false);
-  const handleChange = React.useCallback((e) => {
+  const handleChange = (e) => {
+    if (e.detail.value.length > 15) {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
     setValue(e.detail.value);
-  }, [])
-  const handleClickButton = React.useCallback(() => {
+  }
+  const handleClickButton = () => {
     setList([...list, value]);
     setValue('');
     setDisabled(true);
@@ -19,7 +24,7 @@ export default () => {
       setList([...list, value, reply(value)]);
       setDisabled(false);
     }, 300);
-  }, [list, value]);
+  }
   return (
     <View className={'talk-page'}>
       <View className={'list-wrap'}>
@@ -31,7 +36,7 @@ export default () => {
       </View>
       <View className={'bottom-wrap'}>
         <Input className={'input'} value={value} onInput={handleChange}/>
-        <Button className={'button'} disabled={disabled}	onClick={handleClickButton}>{Send}</Button>
+        <Button className={`button ${disabled ? 'disabled' : ''}`} disabled={disabled} onClick={handleClickButton}>{Send}</Button>
       </View>
     </View>
   );
