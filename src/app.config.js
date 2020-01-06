@@ -1,7 +1,8 @@
 module.exports = {
   pages: [
+    'pages/talk/index',
     'pages/picture/index',
-    'pages/comment/index',
+    // 'pages/comment/index',
   ],
   window: {
     navigationBarTitleText: 'Love zxz',
@@ -17,14 +18,20 @@ module.exports = {
         pagePath: 'pages/picture/index',
         iconPath: 'icons/picture.png',
         selectedIconPath: 'icons/selected-picture.png',
-        text: '图片'
+        text: '照片'
       },
       {
-        pagePath: 'pages/comment/index',
+        pagePath: 'pages/talk/index',
         iconPath: 'icons/comment.png',
         selectedIconPath: 'icons/selected-comment.png',
-        text: '说点什么～'
-      }
+        text: '聊天机器人'
+      },
+      // {
+      //   pagePath: 'pages/comment/index',
+      //   iconPath: 'icons/comment.png',
+      //   selectedIconPath: 'icons/selected-comment.png',
+      //   text: '说点什么～'
+      // }
     ]
   }
 };
