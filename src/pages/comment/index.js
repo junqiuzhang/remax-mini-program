@@ -26,7 +26,7 @@ export default () => {
     <View className={'comment-page'}>
       <Textarea className={'textarea'} value={value} onInput={handleChange} placeholder={WriteComment} />
       <View className={'button-wrap'}>
-  <Button className={'button'} onClick={handleClickButton}>{WriteCommentDone}</Button>
+      <Button className={'button'} onClick={handleClickButton}>{WriteCommentDone}</Button>
       </View>
     </View>
   );
