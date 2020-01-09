@@ -1,23 +1,15 @@
 import * as React from 'react';
 import { View, Image, Button } from 'remax/wechat';
 import { PictureUrl, PictureCount, NextPicture } from '../../data';
+import getImg from './get-img';
 import './index.scss';
 
 export default () => {
   const [pictures, setPictures] = React.useState([]);
   const [currentPicture, setCurrentPicture] = React.useState('');
   React.useEffect(() => {
-    wx.cloud.init()
-    wx.cloud.callFunction({
-      // 云函数名称
-      name: 'get-img',
-      // 传给云函数的参数
-      data: {},
-    })
-    .then(res => {
-      setPictures(res.result.data);
-    })
-    .catch(console.error)
+    const res = getImg()
+    setPictures(res);
   }, [])
   const handleClickImage = React.useCallback(() => {
     wx.previewImage({

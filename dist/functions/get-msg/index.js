@@ -1,18 +1,24 @@
 // 云函数入口文件
+const path = require('path');
 const cloud = require('wx-server-sdk')
+const { NlpManager } = require('node-nlp')
+
+const zh = 'zh'
+const manager = new NlpManager({ languages: [zh] });
 
 cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV
 })
 
-const db = cloud.database()
-
 // 云函数入口函数
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
-  const { data } = await db.collection('picture').get()
+
+  manager.load(path.resolve('./data.json'));
+  const response = await manager.process(zh, event.message);
+
   return {
-    response: data,
+    response,
     openid: wxContext.OPENID,
     appid: wxContext.APPID,
     unionid: wxContext.UNIONID,

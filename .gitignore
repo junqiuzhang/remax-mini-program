@@ -3,6 +3,7 @@ node_modules/
 dist/*
 !dist/functions/
 data/
+data.json
 .github/
 yarn-error.log
 yarn.lock

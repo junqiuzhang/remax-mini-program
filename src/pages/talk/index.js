@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Text, View, Button, Input } from 'remax/wechat';
 import { Send } from '../../data';
-import reply from './reply';
+import getMsg from './get-msg';
 import './index.scss';
 
 export default () => {
@@ -16,12 +16,14 @@ export default () => {
     }
     setValue(e.detail.value);
   }
-  const handleClickButton = () => {
+  const handleClickButton = async () => {
     setList([...list, value]);
     setValue('');
     setDisabled(true);
+    const res = await getMsg(value)
+    const answer = res.answer || res.answers[0] || value.replace('吗', '!')
     setTimeout(() => {
-      setList([...list, value, reply(value)]);
+      setList([...list, value, answer]);
       setDisabled(false);
     }, 300);
   }

@@ -15,8 +15,8 @@ module.exports = {
     list: [
       {
         pagePath: 'pages/talk/index',
-        iconPath: 'icons/comment.png',
-        selectedIconPath: 'icons/selected-comment.png',
+        iconPath: 'icons/talk.png',
+        selectedIconPath: 'icons/selected-talk.png',
         text: '聊天机器人'
       },
       {
