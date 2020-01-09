@@ -7,7 +7,7 @@ import './index.scss';
 export default () => {
   const [list, setList] = React.useState([]);
   const [value, setValue] = React.useState('');
-  const [disabled, setDisabled] = React.useState(false);
+  const [disabled, setDisabled] = React.useState(true);
   const handleChange = (e) => {
     if (e.detail.value.length > 15) {
       setDisabled(true);
