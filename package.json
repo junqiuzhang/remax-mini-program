@@ -5,7 +5,7 @@
   "description": "Starter template for Remax apps",
   "main": "index.js",
   "keywords": [],
-  "author": "Caihuanyu <eterlf41@gmail.com>",
+  "author": "junqiuzhang",
   "license": "MIT",
   "scripts": {
     "start": "remax build -t wechat -w",

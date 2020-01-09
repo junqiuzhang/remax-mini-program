@@ -4,7 +4,8 @@
   background-color: #f9f7fe;
   box-sizing: border-box;
   .list-wrap {
-    height: calc(100vh - 120px);
+    height: calc(100vh - 150px);
+    overflow-y: auto;
     padding: 2vw;
     .list-item {
       width: 100%;
