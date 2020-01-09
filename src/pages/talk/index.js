@@ -21,11 +21,9 @@ export default () => {
     setValue('');
     setDisabled(true);
     const res = await getMsg(value)
-    const answer = res.answer || res.answers[0] || value.replace('吗', '!')
-    setTimeout(() => {
-      setList([...list, value, answer]);
-      setDisabled(false);
-    }, 300);
+    const answer = res.answer || res.answers[0] || value.replace('吗', '')
+    setList([...list, value, answer]);
+    setDisabled(false);
   }
   return (
     <View className={'talk-page'}>
