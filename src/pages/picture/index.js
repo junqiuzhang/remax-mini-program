@@ -7,8 +7,8 @@ import './index.scss';
 export default () => {
   const [pictures, setPictures] = React.useState([]);
   const [currentPicture, setCurrentPicture] = React.useState('');
-  React.useEffect(() => {
-    const res = getImg()
+  React.useEffect(async function() {
+    const res = await getImg()
     setPictures(res);
   }, [])
   const handleClickImage = React.useCallback(() => {
