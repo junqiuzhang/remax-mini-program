@@ -5,6 +5,7 @@ const { NlpManager } = require('node-nlp')
 
 const zh = 'zh'
 const manager = new NlpManager({ languages: [zh] });
+manager.load(path.resolve('./data.json'));
 
 cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV
@@ -14,7 +15,6 @@ cloud.init({
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
 
-  manager.load(path.resolve('./data.json'));
   const response = await manager.process(zh, event.message);
 
   return {
