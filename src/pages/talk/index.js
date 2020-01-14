@@ -17,26 +17,34 @@ export default () => {
     setValue(e.detail.value);
   }
   const handleClickButton = async () => {
-    setList([...list, value]);
+    const question = {
+      isAnswer: false,
+      value
+    }
     setValue('');
+    setList([...list, question]);
     setDisabled(true);
-    const res = await getMsg(value)
-    const answer = res.answer || res.answers[0] || value.replace('吗', '')
-    setList([...list, value, answer]);
+
+    const msg = await getMsg(value)
+    const answer = {
+      isAnswer: true,
+      value: msg.answer || value.replace('吗', '')
+    }
+    setList([...list, question, answer]);
     setDisabled(false);
   }
   return (
     <View className={'talk-page'}>
       <View className={'list-wrap'}>
         {
-          list.map((text, i) => <View className={'list-item'} key={i}>
-            <Text className={'text'}>{text}</Text>
+          list.map(({ isAnswer, value }, i) => <View className={`list-item ${isAnswer && `answer`}`} key={i}>
+            <Text className={'text'}>{value}</Text>
           </View>)
         }
       </View>
       <View className={'bottom-wrap'}>
         <Input className={'input'} value={value} onInput={handleChange}/>
-        <Button className={`button ${disabled ? 'disabled' : ''}`} disabled={disabled} onClick={handleClickButton}>{Send}</Button>
+        <Button className={`button ${disabled && `disabled`}`} disabled={disabled} onClick={handleClickButton}>{Send}</Button>
       </View>
     </View>
   );

@@ -21,7 +21,7 @@
         box-sizing: border-box;
         background-color: #defab1;
       }
-      &:nth-child(2n) {
+      &.answer {
         text-align: left;
         .text {
           background-color: #c0cffa;
