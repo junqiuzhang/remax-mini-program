@@ -14,9 +14,20 @@ cloud.init({
 // 云函数入口函数
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
+  // const fileID = 'cloud://love-zxz.6c6f-love-zxz-1300970134/data/data.json'
+  // const { fileContent } = await cloud.downloadFile({ fileID })
+  // const fileData = fileContent.toString('utf8')
+  // manager.import(fileData)
 
-  const response = await manager.process(zh, event.message);
-
+  const response = await manager.process(zh, event.message)
+  
+  // const log = cloud.logger()
+  // log.info({
+  //   fileID,
+  //   fileContent,
+  //   fileData
+  // })
+  
   return {
     response,
     openid: wxContext.OPENID,
