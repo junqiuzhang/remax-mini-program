@@ -19,8 +19,18 @@ exports.main = async (event, context) => {
   // const fileData = fileContent.toString('utf8')
   // manager.import(fileData)
 
-  const response = await manager.process(zh, event.message)
-  
+  const question = event.message;
+  const response = await manager.process(zh, question)
+
+  const regQuestion = new RegExp(question.split('').join('\\w+'))
+  const ans = response.answers.find(({ answer }) => {
+    const regAnswer = new RegExp(answer.split('').join('\\w+'))
+    return regQuestion.test(answer) || regAnswer.test(question) || question.includes(answer) || answer.includes(question)
+  })
+  if (ans && ans.answer) {
+    response.answer = ans.answer
+  }
+
   // const log = cloud.logger()
   // log.info({
   //   fileID,
