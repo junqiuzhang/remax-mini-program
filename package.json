@@ -1,7 +1,7 @@
 {
   "name": "remax-template",
   "private": true,
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Starter template for Remax apps",
   "main": "index.js",
   "keywords": [],
@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "clsx": "^1.0.4",
-    "node-sass": "^4.13.0",
+    "node-sass": "^4.13.1",
     "react": "^16.8.6",
     "remax": "^1.1.0",
     "remax-cli": "^1.1.0",
