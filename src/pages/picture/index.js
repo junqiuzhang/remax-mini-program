@@ -7,9 +7,12 @@ import './index.scss';
 export default () => {
   const [pictures, setPictures] = React.useState([]);
   const [currentPicture, setCurrentPicture] = React.useState('');
-  React.useEffect(async function() {
-    const res = await getImg()
-    setPictures(res);
+  React.useEffect(() => {
+    async function fetchImg() {
+      const res = await getImg();
+      setPictures(res);
+    }
+    fetchImg();
   }, [])
   const handleClickImage = React.useCallback(() => {
     wx.previewImage({
