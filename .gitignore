@@ -1,10 +1,7 @@
 node_modules/
-!dist/
-dist/*
-!dist/functions/
-data/
-data.json
+dist/
 .github/
+data.json
 yarn-error.log
 yarn.lock
 */.DS_Store
