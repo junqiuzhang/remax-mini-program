@@ -4,7 +4,8 @@ const cloud = require('wx-server-sdk');
 const { NlpManager } = require('node-nlp');
 
 cloud.init({
-  env: cloud.DYNAMIC_CURRENT_ENV
+  env: cloud.DYNAMIC_CURRENT_ENV,
+  traceUser: true,
 });
 
 // 云函数入口函数
@@ -25,7 +26,7 @@ exports.main = async (event, context) => {
 
   try {
     manager = new NlpManager({ languages: ['zh'] });
-    manager.load(path.resolve('./data.json'));
+    await manager.load(path.resolve('./data.json'));
   } catch (error) {
     log.error({ from: 'manager create or load error', error });
   }
