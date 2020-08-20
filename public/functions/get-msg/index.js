@@ -14,39 +14,22 @@ exports.main = async (event, context) => {
 
   try {
     log = cloud.logger();
-  } catch (error) {
-    log.error({ from: 'log error', error });
-  }
-
-  try {
+    // 微信上下文
     wxContext = cloud.getWXContext();
-  } catch (error) {
-    log.error({ from: 'get wxContext error', error });
-  }
-
-  try {
+    // new nlp Object
     manager = new NlpManager({ languages: ['zh'] });
+    // 加载数据
     await manager.load(path.resolve('./data.json'));
-  } catch (error) {
-    log.error({ from: 'manager create or load error', error });
-  }
-
-  try {
+    // 获取参数
     question = event.message;
-  } catch (error) {
-    log.error({ from: 'get param error', error });
-  }
-
-  try {
+    // 计算回答
     response = await manager.process('zh', question);
-  } catch (error) {
-    log.error({ from: 'manager process error', error });
-  }
-
-  try {
-    regQuestion = new RegExp(question.split('').join('\\w+'));
+    // 问题RegExp
+    regQuestion = new RegExp(question.split('').join('.*'));
+    // 最优回答
     respAnswer = response.answers.find(({ answer }) => {
-      const regAnswer = new RegExp(answer.split('').join('\\w+'));
+      // 回答RegExp
+      const regAnswer = new RegExp(answer.split('').join('.*'));
       return (
         regQuestion.test(answer) ||
         regAnswer.test(question) ||
@@ -54,14 +37,15 @@ exports.main = async (event, context) => {
         answer.includes(question)
       );
     });
+    // 返回参数
+    if (!response.answer) {
+      response.answer = response.answers[0];
+    }
+    if (!response.answer) {
+      response.answer = '😂';
+    }
   } catch (error) {
-    log.error({ from: 'answer select error', error });
-  }
-
-  try {
-    response.answer = (respAnswer && respAnswer.answer) || '😂';
-  } catch (error) {
-    log.error({ from: 'set answer error', error });
+    log.error({ error });
   }
 
   return {
