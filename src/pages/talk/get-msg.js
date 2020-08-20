@@ -41,6 +41,11 @@ function get_msg(value) {
           like = nLike;
         }
       }
+      if (!answer) {
+        return {
+          answer: '大人稍等，小的忙不过来了~'
+        }
+      }
       return {
         answer
       }
