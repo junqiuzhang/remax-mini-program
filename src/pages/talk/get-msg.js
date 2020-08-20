@@ -41,6 +41,7 @@ function get_msg(value) {
           like = nLike;
         }
       }
+      console.log('get msg succeed');
       if (!answer) {
         return {
           answer: '大人稍等，小的忙不过来了~'
@@ -50,6 +51,11 @@ function get_msg(value) {
         answer
       }
     })
-    .catch(console.error);
+    .catch(err => {
+      console.error(err);
+      return {
+        answer: '脑婆大人稍等，小的忙不过来了~'
+      }
+    });
 }
 export default get_msg;
