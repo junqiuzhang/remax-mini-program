@@ -10,7 +10,7 @@ cloud.init({
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  let log, wxContext, manager, question, response, regQuestion, respAnswer;
+  let log, wxContext, manager, question, response;
 
   try {
     log = cloud.logger();
@@ -22,36 +22,15 @@ exports.main = async (event, context) => {
     await manager.load(path.resolve('./data.json'));
     // 获取参数
     question = event.message;
-    // 计算回答
-    response = await manager.process('zh', question);
-    // 问题RegExp
-    regQuestion = new RegExp(question.split('').join('.*'));
-    // 最优回答
-    respAnswer = response.answers.find(({ answer }) => {
-      // 回答RegExp
-      const regAnswer = new RegExp(answer.split('').join('.*'));
-      return (
-        regQuestion.test(answer) ||
-        regAnswer.test(question) ||
-        question.includes(answer) ||
-        answer.includes(question)
-      );
-    });
     // 返回参数
-    if (!response.answer) {
-      response.answer = response.answers[0];
-    }
-    if (!response.answer) {
-      response.answer = '😂';
-    }
+    response = await manager.process('zh', question);
+    return {
+      response,
+      openid: wxContext.OPENID,
+      appid: wxContext.APPID,
+      unionid: wxContext.UNIONID
+    };
   } catch (error) {
     log.error({ error });
   }
-
-  return {
-    response,
-    openid: wxContext.OPENID,
-    appid: wxContext.APPID,
-    unionid: wxContext.UNIONID
-  };
 };

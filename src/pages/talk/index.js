@@ -66,8 +66,10 @@ export default () => {
     }
 
     const msg = await getMsg(value)
-    setDisabled(false);
-    setDialog(value, msg.answer);
+    if (msg && msg.answer) {
+      setDisabled(false);
+      setDialog(value, msg.answer);
+    }
   }
   return (
     <View className={'talk-page'}>
