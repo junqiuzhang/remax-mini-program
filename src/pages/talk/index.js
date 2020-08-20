@@ -16,8 +16,8 @@ export default () => {
       setDisabled(true);
     } else {
       setDisabled(false);
+      setValue(e.detail.value);
     }
-    setValue(e.detail.value);
   }
   const setDialog = (ques, ans) => {
     const question = {

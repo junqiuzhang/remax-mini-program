@@ -1,3 +1,17 @@
+@keyframes show-text {
+  0% {
+    transform: scale(0, 0);
+  }
+  60% {
+    transform: scale(1.2, 1.2);
+  }
+  80% {
+    transform: scale(0.8, 0.8);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
 .talk-page {
   width: 100vw;
   height: 100vh;
@@ -20,6 +34,7 @@
         text-align: left;
         box-sizing: border-box;
         background-color: #defab1;
+        animation: show-text 0.5s easy-in-out 0;
       }
       &.answer {
         text-align: left;
