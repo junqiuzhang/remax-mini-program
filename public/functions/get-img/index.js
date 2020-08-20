@@ -17,7 +17,7 @@ exports.main = async (event, context) => {
     wxContext = cloud.getWXContext();
     resp = await db.collection('picture').get();
   } catch (error) {
-    log.error({ from: 'get picture error', error });
+    log.error({ error });
   }
 
   return {
