@@ -19,16 +19,26 @@ export default () => {
     }
     setValue(e.detail.value);
   }
-  const handleClickButton = async () => {
+  const setDialog = (ques, ans) => {
     const question = {
       isAnswer: false,
-      value
+      value: ques
+    }
+    const answer = {
+      isAnswer: true,
+      value: ans
+    }
+    let nList = [];
+    if (ans) {
+      nList = [...list, question, answer];
+    } else {
+      nList = [...list, question];
     }
     setValue('');
-    setList([...list, question]);
-    setDisabled(true);
-
-    var icon = '';
+    setList(nList);
+  }
+  const setSnow = (value) => {
+    let icon = '';
     Object
     .keys(SnowIcon)
     .forEach(val => {
@@ -42,14 +52,22 @@ export default () => {
         setSnowIcon('');
       }, 10000)
     }
+  }
+  const handleClickButton = async () => {
+    setDisabled(true);
+    setDialog(value);
+    // snow特效
+    setSnow(value);
+
+    if (value.includes('吗') || value.includes('？')) {
+      setDisabled(false);
+      setDialog(value, value.replace('吗', '').replace('？', ''));
+      return;
+    }
 
     const msg = await getMsg(value)
-    const answer = {
-      isAnswer: true,
-      value: msg.answer || value.replace('吗', '')
-    }
-    setList([...list, question, answer]);
     setDisabled(false);
+    setDialog(value, msg.answer);
   }
   return (
     <View className={'talk-page'}>

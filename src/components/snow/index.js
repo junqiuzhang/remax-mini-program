@@ -1,19 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Text } from 'remax/wechat';
 const Snow = ({ icon }) => {
-  const transition = `${3000 + 7000 * Math.random()}ms`;
+  const transition = `all ${3000 + 7000 * Math.random()}ms ease-in`;
   const [style, setStyle] = useState({
-    top: `0%`,
-    left: `${(Math.random() * 100).toFixed()}%`,
     position: 'fixed',
     transition,
+    transform: `translate(${(Math.random() * 100).toFixed()}vw, 0)`,
+    opacity: 1
   })
   useEffect(() => {
     setTimeout(() => {
       setStyle({
         ...style,
-        top: `100%`,
-        left: `${(Math.random() * 100).toFixed()}%`,
+        transform: `translate(${(Math.random() * 100).toFixed()}vw, 80vh)`,
+        opacity: 0
       })
     }, 0)
   }, [icon])
