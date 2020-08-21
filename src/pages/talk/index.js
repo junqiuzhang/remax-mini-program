@@ -78,7 +78,7 @@ export default () => {
       }
       <View className={'list-wrap'}>
         {
-          list.map(({ isAnswer, value }, i) => <View className={`list-item ${isAnswer && `answer`}`} key={i}>
+          list.map(({ isAnswer, value }, i) => <View className={`list-item ${isAnswer ? `answer bounce-in-left` : `bounce-in-right`}`} key={i}>
             <Text className={'text'}>{value}</Text>
           </View>)
         }

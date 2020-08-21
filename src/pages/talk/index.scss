@@ -1,16 +1,71 @@
-@keyframes show-text {
+@keyframes bounce-in-left {
   0% {
-    transform: scale(0, 0);
+    opacity: 0;
+    transform: translate3d(-3000px, 0, 0) scaleX(3);
   }
   60% {
-    transform: scale(1.2, 1.2);
+    opacity: 1;
+    transform: translate3d(25px, 0, 0) scaleX(1);
+  }
+  75% {
+    transform: translate3d(-10px, 0, 0) scaleX(0.98);
+  }
+  90% {
+    transform: translate3d(5px, 0, 0) scaleX(0.995);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes bounce-in-right {
+  0% {
+    opacity: 0;
+    transform: translate3d(3000px, 0, 0) scaleX(3);
+  }
+  60% {
+    opacity: 1;
+    transform: translate3d(-25px, 0, 0) scaleX(1);
+  }
+  75% {
+    transform: translate3d(10px, 0, 0) scaleX(0.98);
+  }
+  90% {
+    transform: translate3d(-5px, 0, 0) scaleX(0.995);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes bounce-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.3, 0.3);
+  }
+  20% {
+    transform: scale(1.1, 1.1);
+  }
+  40% {
+    transform: scale(0.9, 0.9);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.03, 1.03);
   }
   80% {
-    transform: scale(0.8, 0.8);
+    transform: scale(0.97, 0.97);
   }
   100% {
     transform: scale(1, 1);
   }
+}
+.bounce-in-left {
+  animation: bounce-in-left 0.75s cubic-bezier(0.215, 0.61, 0.355, 1) 0s 1;
+}
+.bounce-in-right {
+  animation: bounce-in-right 0.75s cubic-bezier(0.215, 0.61, 0.355, 1) 0s 1;
+}
+.bounce-in {
+  animation: bounce-in 0.75s cubic-bezier(0.215, 0.61, 0.355, 1) 0s 1;
 }
 .talk-page {
   width: 100vw;
@@ -34,7 +89,6 @@
         text-align: left;
         box-sizing: border-box;
         background-color: #defab1;
-        animation: show-text 0.5s easy-in-out 0;
       }
       &.answer {
         text-align: left;
