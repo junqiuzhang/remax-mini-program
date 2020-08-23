@@ -44,7 +44,7 @@ function get_msg(value) {
       console.log('get msg succeed');
       if (!answer) {
         return {
-          answer: '大人稍等，小的忙不过来了~'
+          answer: '脑婆大人稍等，小的忙不过来了~'
         }
       }
       return {

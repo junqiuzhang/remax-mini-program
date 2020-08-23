@@ -6,6 +6,25 @@ import { SnowIcon } from '../../components/snow/constants';
 import getMsg from './get-msg';
 import './index.scss';
 
+function getDialogPipe(value) {
+  return new Promise((resolve, reject) => {
+    // 含有‘吗’或‘？’
+    if (value.includes('吗') || value.includes('？')) {
+      setTimeout(() => {
+        resolve(value.replace('吗', '').replace('？', ''));
+      }, 500);
+      return;
+    }
+    // 默认
+    getMsg(value).then(msg => {
+      resolve(msg.answer);
+    });
+    return;
+  })
+}
+function renderDialogPipe(props) {
+  return <Text className={'text'}>{props}</Text>;
+}
 export default () => {
   const [list, setList] = React.useState([]);
   const [value, setValue] = React.useState('');
@@ -56,20 +75,12 @@ export default () => {
   const handleClickButton = async () => {
     setDisabled(true);
     setDialog(value);
+    
     // snow特效
     setSnow(value);
 
-    if (value.includes('吗') || value.includes('？')) {
-      setTimeout(() => {
-        setDialog(value, value.replace('吗', '').replace('？', ''));
-      }, 500);
-      return;
-    }
-
-    const msg = await getMsg(value);
-    if (msg && msg.answer) {
-      setDialog(value, msg.answer);
-    }
+    const dialog = await getDialogPipe(value);
+    setDialog(value, dialog);
   }
   return (
     <View className={'talk-page'}>
@@ -79,7 +90,7 @@ export default () => {
       <View className={'list-wrap'}>
         {
           list.map(({ isAnswer, value }, i) => <View className={`list-item ${isAnswer ? `answer bounce-in-left` : `bounce-in-right`}`} key={i}>
-            <Text className={'text'}>{value}</Text>
+            {renderDialogPipe(value)}
           </View>)
         }
       </View>
