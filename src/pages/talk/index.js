@@ -12,7 +12,7 @@ export default () => {
   const [disabled, setDisabled] = React.useState(true);
   const [snowIcon, setSnowIcon] = React.useState('');
   const handleChange = (e) => {
-    if (e.detail.value.length > 15) {
+    if (e.detail.value.trim().length < 1 || e.detail.value.length > 15) {
       setDisabled(true);
     } else {
       setDisabled(false);
@@ -60,14 +60,12 @@ export default () => {
     setSnow(value);
 
     if (value.includes('吗') || value.includes('？')) {
-      setDisabled(false);
       setDialog(value, value.replace('吗', '').replace('？', ''));
       return;
     }
 
     const msg = await getMsg(value)
     if (msg && msg.answer) {
-      setDisabled(false);
       setDialog(value, msg.answer);
     }
   }
