@@ -60,11 +60,13 @@ export default () => {
     setSnow(value);
 
     if (value.includes('吗') || value.includes('？')) {
-      setDialog(value, value.replace('吗', '').replace('？', ''));
+      setTimeout(() => {
+        setDialog(value, value.replace('吗', '').replace('？', ''));
+      }, 500);
       return;
     }
 
-    const msg = await getMsg(value)
+    const msg = await getMsg(value);
     if (msg && msg.answer) {
       setDialog(value, msg.answer);
     }
