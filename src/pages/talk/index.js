@@ -4,25 +4,32 @@ import { Send } from '../../data';
 import SnowFall from '../../components/snow';
 import { SnowIcon } from '../../components/snow/constants';
 import getMsg from './get-msg';
+import * as Question from './pipe/question';
 import './index.scss';
-
-function getDialogPipe(value) {
-  return new Promise((resolve, reject) => {
-    // 含有‘吗’或‘？’
-    if (value.includes('吗') || value.includes('？')) {
-      setTimeout(() => {
-        resolve(value.replace('吗', '').replace('？', ''));
-      }, 500);
-      return;
+const pipeArray = [Question]
+async function getDialogPipe(value) {
+  // 特殊
+  for (let index = 0; index < pipeArray.length; index++) {
+    const pipe = pipeArray[index];
+    if (pipe.dialogReg.test(value)) {
+      const dialog = await pipe.getDialog(value);
+      return dialog;
     }
-    // 默认
-    getMsg(value).then(msg => {
-      resolve(msg.answer);
-    });
-    return;
-  });
+  }
+  // 默认
+  const dialog = await getMsg(value);
+  return dialog.answer;
 }
 function renderDialogPipe(props) {
+  // 特殊
+  for (let index = 0; index < pipeArray.length; index++) {
+    const pipe = pipeArray[index];
+    if (pipe.testDialog(props)) {
+      const dialog = pipe.renderDialog(value);
+      return dialog;
+    }
+  }
+  // 默认
   return <Text className={'text'}>{props}</Text>;
 }
 export default () => {

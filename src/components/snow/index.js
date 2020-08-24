@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Text } from 'remax/wechat';
 const Snow = ({ icon }) => {
-  const transition = `all ${3000 + 7000 * Math.random()}ms ease-in`;
+  const transition = `all ${3000 + 2000 * Math.random()}ms ease-in`;
   const [style, setStyle] = useState({
     position: 'fixed',
     transition,
