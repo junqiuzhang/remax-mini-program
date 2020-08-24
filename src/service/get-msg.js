@@ -1,3 +1,4 @@
+import { WAIT_MOMENT } from '../data/index';
 wx.cloud.init();
 /**
  * @param {string} str1
@@ -44,7 +45,7 @@ function get_msg(value) {
       console.log('get msg succeed');
       if (!answer) {
         return {
-          answer: '脑婆大人稍等，小的忙不过来了~'
+          answer: WAIT_MOMENT
         }
       }
       return {
@@ -54,7 +55,7 @@ function get_msg(value) {
     .catch(err => {
       console.error(err);
       return {
-        answer: '脑婆大人稍等，小的忙不过来了~'
+        answer: WAIT_MOMENT
       }
     });
 }
