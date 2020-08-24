@@ -5,14 +5,14 @@ const Snow = ({ icon }) => {
   const [style, setStyle] = useState({
     position: 'fixed',
     transition,
-    transform: `translate(${(Math.random() * 100).toFixed()}vw, 0)`,
+    transform: `translate(${(Math.random() * 100).toFixed()}vw, -10vh)`,
     opacity: 1
   })
   useEffect(() => {
     setTimeout(() => {
       setStyle({
         ...style,
-        transform: `translate(${(Math.random() * 100).toFixed()}vw, 80vh)`,
+        transform: `translate(${(Math.random() * 100).toFixed()}vw, 90vh)`,
         opacity: 0
       })
     }, 0)
