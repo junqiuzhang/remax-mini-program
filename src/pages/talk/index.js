@@ -1,81 +1,67 @@
 import * as React from 'react';
 import { Text, View, Button, Input } from 'remax/wechat';
-import { Send } from '../../data';
+import { SNOW_ICON, SEND } from '../../data';
+import getMsg from '../../service/get-msg';
 import SnowFall from '../../components/snow';
-import { SnowIcon } from '../../components/snow/constants';
-import getMsg from './get-msg';
-import * as Question from './pipe/question';
+import * as Question from './plugin/question/index';
+import * as Picture from './plugin/picture/index';
 import './index.scss';
-const pipeArray = [Question]
+const pipeArray = [Question, Picture];
 async function getDialogPipe(value) {
   // 特殊
   for (let index = 0; index < pipeArray.length; index++) {
     const pipe = pipeArray[index];
-    if (pipe.dialogReg.test(value)) {
-      const dialog = await pipe.getDialog(value);
-      return dialog;
+    if (pipe.testGetDialog(value)) {
+      const answers = await pipe.getDialog(value);
+      debugger
+      return answers;
     }
   }
   // 默认
-  const dialog = await getMsg(value);
-  return dialog.answer;
+  const msg = await getMsg(value);
+  const answer = {
+    type: 'text',
+    isAnswer: true,
+    value: msg.answer
+  };
+  return [answer];
 }
-function renderDialogPipe(props) {
+function renderDialogPipe(props, i) {
   // 特殊
   for (let index = 0; index < pipeArray.length; index++) {
     const pipe = pipeArray[index];
-    if (pipe.testDialog(props)) {
-      const dialog = pipe.renderDialog(value);
-      return dialog;
+    if (pipe.testRenderDialog(props)) {
+      const answer = pipe.renderDialog(props, i);
+      return answer;
     }
   }
   // 默认
-  return <Text className={'text'}>{props}</Text>;
+  const { type, isAnswer, value } = props;
+  const answer = (
+    <View
+      className={`list-item ${
+        isAnswer ? `answer bounce-in-left` : `bounce-in-right`
+      }`}
+      key={i}
+    >
+      <Text className={'text'}>{value}</Text>
+    </View>
+  );
+  return answer;
 }
 export default () => {
   const [list, setList] = React.useState([]);
   const [value, setValue] = React.useState('');
   const [disabled, setDisabled] = React.useState(true);
+  // snow
   const [snowIcon, setSnowIcon] = React.useState('');
+
   const handleChange = React.useCallback(e => {
     if (e.detail.value.trim().length < 1 || e.detail.value.length > 15) {
       setDisabled(true);
     } else {
       setDisabled(false);
       setValue(e.detail.value);
-    }
-  }, []);
-  const setDialog = (ques, ans) => {
-    const question = {
-      isAnswer: false,
-      value: ques
-    };
-    const answer = {
-      isAnswer: true,
-      value: ans
-    };
-    let nList = [];
-    if (ans) {
-      nList = [...list, question, answer];
-    } else {
-      nList = [...list, question];
-    }
-    setValue('');
-    setList(nList);
-    scrollToBottom();
-  };
-  const setSnow = React.useCallback(value => {
-    let icon = '';
-    Object.keys(SnowIcon).forEach(val => {
-      if (value.includes(val)) {
-        icon = SnowIcon[val];
-      }
-    });
-    if (icon) {
-      setSnowIcon(icon);
-      setTimeout(() => {
-        setSnowIcon('');
-      }, 10000);
     }
   }, []);
   const scrollToBottom = React.useCallback(() => {
@@ -90,30 +76,43 @@ export default () => {
       });
     });
   }, []);
+  const setSnow = React.useCallback(value => {
+    for (const key in SNOW_ICON) {
+      if (SNOW_ICON.hasOwnProperty(key)) {
+        const val = SNOW_ICON[key];
+        if (value.includes(key)) {
+          setSnowIcon(val);
+          return;
+        }
+      }
+    }
+  }, []);
+  const setDialog = dialog => {
+    setValue('');
+    setList([...list, ...dialog]);
+    scrollToBottom();
+  };
   const handleClickButton = async () => {
     setDisabled(true);
-    setDialog(value);
 
-    // snow特效
+    // snow
     setSnow(value);
 
-    const dialog = await getDialogPipe(value);
-    setDialog(value, dialog);
+    // dialog
+    const question = {
+      type: 'text',
+      isAnswer: false,
+      value
+    };
+    setDialog([question]);
+    const answers = await getDialogPipe(value);
+    setDialog([question, ...answers]);
   };
   return (
     <View className={'talk-page'}>
       {snowIcon && <SnowFall icon={snowIcon} />}
       <View className={'list-wrap'}>
-        {list.map(({ isAnswer, value }, i) => (
-          <View
-            className={`list-item ${
-              isAnswer ? `answer bounce-in-left` : `bounce-in-right`
-            }`}
-            key={i}
-          >
-            {renderDialogPipe(value)}
-          </View>
-        ))}
+        {list.map((dialog, i) => renderDialogPipe(dialog, i))}
       </View>
       <View className={'bottom-wrap'}>
         <Input className={'input'} value={value} onInput={handleChange} />
@@ -122,7 +121,7 @@ export default () => {
           disabled={disabled}
           onClick={handleClickButton}
         >
-          {Send}
+          {SEND}
         </Button>
       </View>
     </View>

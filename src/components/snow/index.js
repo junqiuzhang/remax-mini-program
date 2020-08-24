@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text } from 'remax/wechat';
 const Snow = ({ icon }) => {
-  const transition = `all ${3000 + 2000 * Math.random()}ms ease-in`;
+  const transition = `all ${3000 + 3000 * Math.random()}ms ease-in`;
   const [style, setStyle] = useState({
     position: 'fixed',
     transition,
@@ -19,22 +19,11 @@ const Snow = ({ icon }) => {
   }, [icon])
   return <Text style={style}>{icon}</Text>
 }
-const SnowFall = ({ icon }) => {
-  const [snows, setSnows] = useState([])
-  const snowfallInterval = useRef()
-  useEffect(() => {
-    // 每隔一段时间生成一片雪花
-    snowfallInterval.current = setInterval(() => {
-      const snow = Math.random()
-      snows.push(snow)
-      setSnows(snows)
-    }, 100)
-    return () => {
-      clearInterval(snowfallInterval.current)
-    }
-  }, [icon])
-  return <>
-    {snows.map(snow => <Snow icon={icon} key={snow}/>)}
-  </>
+const SnowFall = ({ icon, number = 30 }) => {
+  const snows = [];
+  for (let i = 0; i < number; i++) {
+    snows.push(<Snow icon={icon} key={i}/>)
+  }
+  return snows;
 }
 export default SnowFall
