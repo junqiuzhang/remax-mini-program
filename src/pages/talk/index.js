@@ -4,7 +4,7 @@ import { SNOW_ICON, SEND } from '../../data';
 import getMsg from '../../service/get-msg';
 import SnowFall from '../../components/snow';
 import * as Picture from './plugin/picture/index';
-import * as Music from './plugin/music/index'
+import * as Music from './plugin/music/index';
 import './index.scss';
 const pipeArray = [Picture, Music];
 async function getDialogPipe(value) {
@@ -26,25 +26,20 @@ async function getDialogPipe(value) {
   };
   return [answer];
 }
-function renderDialogPipe(props, i) {
+function renderDialogPipe(props) {
   // 特殊
   for (let index = 0; index < pipeArray.length; index++) {
     const pipe = pipeArray[index];
     const testResult = pipe.testRenderDialog(props);
     if (testResult) {
-      const answer = pipe.renderDialog(props, i, testResult);
+      const answer = pipe.renderDialog(props, testResult);
       return answer;
     }
   }
   // 默认
   const { type, isAnswer, value } = props;
   const answer = (
-    <View
-      className={`list-item ${
-        isAnswer ? `answer bounce-in-left` : `bounce-in-right`
-      }`}
-      key={i}
-    >
+    <View className={'list-item'}>
       <Text className={'text'}>{value}</Text>
     </View>
   );
@@ -90,8 +85,12 @@ export default () => {
   }, []);
   const setDialog = dialog => {
     setValue('');
-    setList([...list, ...dialog]);
-    scrollToBottom();
+    for (let i = 0; i < dialog.length; i++) {
+      setTimeout(() => {
+        setList(list.concat(dialog.slice(0, i + 1)));
+        scrollToBottom();
+      }, i * 500);
+    }
   };
   const handleClickButton = async () => {
     setDisabled(true);
@@ -113,7 +112,16 @@ export default () => {
     <View className={'talk-page'}>
       {snowIcon && <SnowFall icon={snowIcon} />}
       <View className={'list-wrap'}>
-        {list.map((dialog, i) => renderDialogPipe(dialog, i))}
+        {list.map((dialog, i) => (
+          <View
+            className={`item-wrap ${
+              dialog.isAnswer ? `answer bounce-in-left` : `bounce-in-right`
+            }`}
+            key={i}
+          >
+            {renderDialogPipe(dialog)}
+          </View>
+        ))}
       </View>
       <View className={'bottom-wrap'}>
         <Input className={'input'} value={value} onInput={handleChange} />

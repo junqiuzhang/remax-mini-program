@@ -7,10 +7,9 @@ import './index.scss';
 const state = {
   musicList: []
 };
-getMsc()
-.then(musics => {
+getMsc().then(musics => {
   state.musicList = musics;
-})
+});
 // 含有‘歌’ 歌名
 export const testGetDialog = value => {
   for (let i = 0; i < state.musicList.length; i++) {
@@ -37,13 +36,14 @@ export const getDialog = (value, testResult) => {
         isAnswer: true,
         value: state.musicList.map(music => `${music.name}`) + WHICH_MUSIC
       };
-      resolve([answer1, answer2])
+      resolve([answer1, answer2]);
     } else {
       const answer = {
         type: 'music',
+        isAnswer: true,
         value: state.musicList[testResult]
       };
-      resolve([answer])
+      resolve([answer]);
     }
   });
 };
@@ -55,17 +55,19 @@ class Music extends React.Component {
     super(props);
     this.state = {
       url: ''
-    }
+    };
   }
   componentDidMount() {
     const { value } = this.props;
-    wx.cloud.downloadFile({
-      fileID: MUSIC_URL + value,
-    }).then(music => {
-      this.setState({
-        url: music.tempFilePath
+    wx.cloud
+      .downloadFile({
+        fileID: MUSIC_URL + value
+      })
+      .then(music => {
+        this.setState({
+          url: music.tempFilePath
+        });
       });
-    })
   }
   render() {
     const { name } = this.props;
@@ -74,18 +76,16 @@ class Music extends React.Component {
       return false;
     }
     return (
-      <View className={`list-item answer bounce-in-left}`}>
-        <Audio
-          className={'music'}
-          controls={true}
-          src={url}
-          name={name}
-          bindError={console.log}
-        />
-      </View>
+      <Audio
+        className={'music'}
+        controls={true}
+        src={url}
+        name={name}
+        bindError={console.log}
+      />
     );
   }
 }
-export const renderDialog = (props, i) => {
-  return <Music {...props.value} key={i}/>
+export const renderDialog = props => {
+  return <Music {...props.value} />;
 };

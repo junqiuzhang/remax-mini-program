@@ -21,6 +21,7 @@ export const getDialog = value => {
         const i = Math.floor(Math.random() * imgs.length);
         const answer2 = {
           type: 'image',
+          isAnswer: true,
           value: imgs[i].value
         };
         resolve([answer1, answer2]);
@@ -33,7 +34,7 @@ export const getDialog = value => {
 export const testRenderDialog = props => {
   return props.type === 'image';
 };
-export const renderDialog = (props, i) => {
+export const renderDialog = (props) => {
   const handleClickImage = () => {
     wx.previewImage({
       current: PICTURE_URL + props.value,
@@ -41,7 +42,7 @@ export const renderDialog = (props, i) => {
     });
   };
   return (
-    <View className={`list-item answer bounce-in-left}`} key={i}>
+    <View className={'list-item'}>
       <Image
         className={'picture'}
         src={PICTURE_URL + props.value}
