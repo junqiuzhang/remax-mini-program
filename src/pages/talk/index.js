@@ -5,8 +5,9 @@ import getMsg from '../../service/get-msg';
 import SnowFall from '../../components/snow';
 import * as Picture from './plugin/picture/index';
 import * as Music from './plugin/music/index';
+import * as HongBao from './plugin/hongbao/index';
 import './index.scss';
-const pipeArray = [Picture, Music];
+const pipeArray = [Picture, Music, HongBao];
 async function getDialogPipe(value) {
   // 特殊
   for (let index = 0; index < pipeArray.length; index++) {
@@ -37,7 +38,7 @@ function renderDialogPipe(props) {
     }
   }
   // 默认
-  const { type, isAnswer, value } = props;
+  const { value } = props;
   const answer = (
     <View className={'list-item'}>
       <Text className={'text'}>{value}</Text>

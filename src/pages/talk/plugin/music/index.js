@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Audio } from 'remax/wechat';
+import { Audio } from 'remax/wechat';
 import { MUSIC_URL, THIS_MUSIC, WHICH_MUSIC } from '../../../../data';
 import getMsc from '../../../../service/get-msc';
 import './index.scss';
