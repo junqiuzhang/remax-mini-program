@@ -53,7 +53,7 @@ export default () => {
   const [snowIcon, setSnowIcon] = React.useState('');
 
   const handleChange = React.useCallback(e => {
-    if (e.detail.value.trim().length < 1 || e.detail.value.length > 15) {
+    if (e.detail.value.trim().length < 1 || e.detail.value.length > 30) {
       setDisabled(true);
     } else {
       setDisabled(false);
