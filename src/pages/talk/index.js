@@ -3,17 +3,17 @@ import { Text, View, Button, Input } from 'remax/wechat';
 import { SNOW_ICON, SEND } from '../../data';
 import getMsg from '../../service/get-msg';
 import SnowFall from '../../components/snow';
-import * as Question from './plugin/question/index';
 import * as Picture from './plugin/picture/index';
+import * as Music from './plugin/music/index'
 import './index.scss';
-const pipeArray = [Question, Picture];
+const pipeArray = [Picture, Music];
 async function getDialogPipe(value) {
   // 特殊
   for (let index = 0; index < pipeArray.length; index++) {
     const pipe = pipeArray[index];
-    if (pipe.testGetDialog(value)) {
-      const answers = await pipe.getDialog(value);
-      debugger
+    const testResult = pipe.testGetDialog(value);
+    if (testResult) {
+      const answers = await pipe.getDialog(value, testResult);
       return answers;
     }
   }
@@ -30,8 +30,9 @@ function renderDialogPipe(props, i) {
   // 特殊
   for (let index = 0; index < pipeArray.length; index++) {
     const pipe = pipeArray[index];
-    if (pipe.testRenderDialog(props)) {
-      const answer = pipe.renderDialog(props, i);
+    const testResult = pipe.testRenderDialog(props);
+    if (testResult) {
+      const answer = pipe.renderDialog(props, i, testResult);
       return answer;
     }
   }
