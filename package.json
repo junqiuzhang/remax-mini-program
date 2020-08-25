@@ -1,7 +1,7 @@
 {
   "name": "remax-template",
   "private": true,
-  "version": "2.2.2",
+  "version": "2.2.3",
   "description": "Starter template for Remax apps",
   "main": "index.js",
   "keywords": [],

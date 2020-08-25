@@ -63,7 +63,7 @@ class HongBao extends React.Component {
     }, 6000);
     setTimeout(() => {
       this.canClick = true;
-      this.setState({ showHongBao: false, imgUrl: HongBaoImg });
+      this.setState({ showHongBao: false, animationType: 'in', imgUrl: HongBaoImg });
     }, 8000);
   };
   render() {
