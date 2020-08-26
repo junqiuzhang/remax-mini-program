@@ -95,12 +95,13 @@ page {
     padding: 30px 2vw 150px;
     .item-wrap {
       width: 100%;
+      padding: 16px;
       text-align: right;
+      box-sizing: border-box;
       .list-item {
         display: inline-block;
         max-width: 90vw;
         min-height: 52px;
-        margin: 16px;
         padding: 16px;
         line-height: 52px;
         border-radius: 20px;
