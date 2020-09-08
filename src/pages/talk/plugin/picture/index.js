@@ -27,6 +27,7 @@ export const getDialog = value => {
         resolve([answer1, answer2]);
       })
       .catch(err => {
+        console.log(err);
         resolve([answer1]);
       });
   });

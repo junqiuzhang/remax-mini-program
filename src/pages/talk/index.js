@@ -6,8 +6,9 @@ import SnowFall from '../../components/snow';
 import * as Picture from './plugin/picture/index';
 import * as Music from './plugin/music/index';
 import * as HongBao from './plugin/hongbao/index';
+import * as YiMa from './plugin/yima/index';
 import './index.scss';
-const pipeArray = [Picture, Music, HongBao];
+const pipeArray = [Picture, Music, HongBao, YiMa];
 async function getDialogPipe(value) {
   // 特殊
   for (let index = 0; index < pipeArray.length; index++) {
