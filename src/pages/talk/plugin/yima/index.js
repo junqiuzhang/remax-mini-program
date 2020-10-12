@@ -22,7 +22,7 @@ getDate({ event: 'yima' }).then(data => {
     const preDate = dates[index + 1];
     total += curDate.getTime() - preDate.getTime();
   }
-  state.average = total / dates.length - 1;
+  state.average = total / (dates.length - 1);
   state.preDate = dates[0];
   state.nexDate = new Date(state.preDate.getTime() + state.average);
 });
