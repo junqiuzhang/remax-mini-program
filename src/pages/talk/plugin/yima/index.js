@@ -55,15 +55,16 @@ export const getDialog = value => {
       isAnswer: true,
       value: message
     };
-    const answer2 = {
-      type: 'text',
-      isAnswer: true,
-      value: YIMA_WATER
-    };
     let dialog = [];
     dialog.push(answer1);
-    const diff = YimaState.nexDate.getTime() - YimaState.curDate.getTime();
-    if (diff > 0 && diff < MIN_TIME) {
+    const preDiff = YimaState.curDate.getTime() - YimaState.dates[0].getTime();
+    const nexDiff = YimaState.nexDate.getTime() - YimaState.curDate.getTime();
+    if (preDiff < MIN_TIME || nexDiff < MIN_TIME) {
+      const answer2 = {
+        type: 'text',
+        isAnswer: true,
+        value: nexDiff < MIN_TIME ? YIMA_WATER : YIMA_WATER.split('快').join('')
+      };
       dialog.push(answer2);
     }
     resolve(dialog);
