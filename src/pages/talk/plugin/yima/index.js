@@ -41,12 +41,13 @@ export const testGetDialog = value => {
 };
 export const getDialog = value => {
   return new Promise((resolve, reject) => {
-    console.log(YimaState);
-    const times = value.split('上').length - 1;
     const timesMatchResult = value.match(/(上+)次/);
-    const message = YIMA.replace('{0}', timesMatchResult ? timesMatchResult[1] : '上')
-      .replace('{1}', YimaState.dates[times].getMonth() + 1)
-      .replace('{2}', YimaState.dates[times].getDate())
+    const times = Math.min(timesMatchResult ? timesMatchResult[1].length : 1, YimaState.dates.length);
+    const timesStr = new Array(times + 1).join('上');
+    const timesDate = YimaState.dates[times - 1];
+    const message = YIMA.replace('{0}', timesStr)
+      .replace('{1}', timesDate.getMonth() + 1)
+      .replace('{2}', timesDate.getDate())
       .replace('{3}', YimaState.nexDate.getMonth() + 1)
       .replace('{4}', YimaState.nexDate.getDate());
     const answer1 = {
