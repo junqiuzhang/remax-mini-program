@@ -16,7 +16,7 @@ function main() {
   read(pathName)
     .then(fileNames => {
       for (let i = 0; i < fileNames.length; i++) {
-        if (i===0) {
+        if (i === 0) {
           continue;
         }
         const name = fileNames[i];
